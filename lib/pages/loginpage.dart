@@ -1,23 +1,55 @@
-import 'package:drug_app/components/loginpage/mytextfield.dart';
-import 'package:drug_app/components/loginpage/signinbutton.dart';
-import 'package:drug_app/components/loginpage/squaretile.dart';
+import 'package:drugapp/Auth/auth_service.dart';
+import 'package:drugapp/components/loginpage/mytextfield.dart';
+import 'package:drugapp/components/loginpage/signinbutton.dart';
+import 'package:drugapp/components/loginpage/squaretile.dart';
 import 'package:flutter/material.dart';
 
-class Loginpage extends StatelessWidget {
+class Loginpage extends StatefulWidget {
 Loginpage({super.key});
 
-  void signIn(){
+  @override
+  State<Loginpage> createState() => _LoginpageState();
+}
 
+class _LoginpageState extends State<Loginpage> {
+
+final emailController = TextEditingController();
+
+final passwordController = TextEditingController();
+
+final authService = AuthService();
+
+void login() async{
+
+  showDialog(
+    context: context,
+     builder: (context) {
+      return const Center(child: CircularProgressIndicator());
+     },
+     );
+
+  final email  = emailController.text;
+  final password = passwordController.text;
+
+  try{
+    await authService.signInWithEmailPassword(email, password);
+  } catch (e) {
+    if(mounted){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text("Error: $e")));
+    }
   }
 
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  Navigator.pop(context);
 
+}
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
+
+    //bool isUnderlined = true;
+
     return Scaffold(
 
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white, //Colors.grey[300],
       
       body:SafeArea(
 
@@ -45,8 +77,8 @@ Loginpage({super.key});
               const SizedBox(height: 25,),
           
               Mytextfield(
-              controller: usernameController,
-              hinttext: 'Username',
+              controller: emailController,
+              hinttext: 'Email',
               obscuretext: false,
              ),
 
@@ -55,7 +87,7 @@ Loginpage({super.key});
               Mytextfield(
               controller: passwordController,
               hinttext: 'Password',
-              obscuretext: true,
+              obscuretext:true ,
               ),
 
               const SizedBox(height:4,),
@@ -73,7 +105,7 @@ Loginpage({super.key});
               const SizedBox(height: 15,),
 
               Button(
-                onTap: signIn,
+                onTap: login
               ),
 
               const SizedBox(height: 50,),
@@ -123,7 +155,7 @@ Loginpage({super.key});
                 const SizedBox(width: 10,),
 
                 SquareTile(
-                imagepath: 'lib/Images/a.png',
+                imagepath: 'lib/Images/f.png',
                 )
                 ],
               ),
@@ -131,15 +163,42 @@ Loginpage({super.key});
                 const SizedBox(height: 25,),
 
              
-                const Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Not a member?"),
+                    
                     SizedBox(width: 4,),
-                    Text("Register Now",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold
+
+                    GestureDetector(
+
+                      onTap: () {
+                        Navigator.pushNamed(context, '/drawer/registerpage');
+                      },
+
+                     // onTapDown: (details) {
+                      //  setState(() {
+                        //  isUnderlined = true;
+                       // });
+                      //},
+
+                      // onTapUp: (details) {
+                     //   setState(() {
+                       //   isUnderlined = false;
+                       // });
+                     //   Navigator.pushNamed(context,'/drawer/register_page');
+                     // },
+
+                      child: Text("Register Now",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.blue,
+                        //decorationThickness: 1
+                         //decoration: isUnderlined ? TextDecoration.underline : TextDecoration.none,
+
+                        ),
                       ),
                     ),
                   ],

@@ -41,8 +41,8 @@ final void Function(int)? onTabChange;
             ),
 
           GButton(
-              icon: Icons.monitor_heart,
-              text: "Health", 
+              icon: Icons.chat,
+              text: "Chat", 
             ),
         ],
       ),

@@ -1,8 +1,9 @@
-import 'package:drug_app/components/bottomnavbar.dart';
-import 'package:drug_app/pages/healthpage.dart';
-import 'package:drug_app/pages/homepage.dart';
-import 'package:drug_app/pages/mappage.dart';
-import 'package:drug_app/pages/scanpage.dart';
+import 'package:drugapp/Auth/auth_service.dart';
+import 'package:drugapp/components/bottomnavbar.dart';
+import 'package:drugapp/pages/healthpage.dart';
+import 'package:drugapp/pages/homepage.dart';
+import 'package:drugapp/pages/mappage.dart';
+import 'package:drugapp/pages/scanpage.dart';
 import 'package:flutter/material.dart';
 
 class Firstpage extends StatefulWidget {
@@ -13,6 +14,13 @@ class Firstpage extends StatefulWidget {
 }
 
 class _FirstpageState extends State<Firstpage> {
+
+final authService = AuthService();
+
+  void logout() async {
+  await authService.signOut();
+}
+
 
   int selected = 0;
 
@@ -209,32 +217,33 @@ class _FirstpageState extends State<Firstpage> {
                             ),
                           
                             onTap: () {
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context,'/drawer/accountpage');
+                              logout();
+                             // Navigator.pop(context);
+                              //Navigator.pushNamed(context,'/drawer/accountpage');
                             },
                             ),
                           ),
 
-                         Padding(
-                          padding:const EdgeInsets.only(top:10.0),
-                          child: ListTile(
-                            leading:const Icon(
-                              Icons.logout,
-                              size: 35,
-                              color: Colors.white,),
-                            title:const Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20),
-                              ),
+                         //Padding(
+                        //  padding:const EdgeInsets.only(top:10.0),
+                         // child: ListTile(
+                          //  leading:const Icon(
+                           //   Icons.logout,
+                           //   size: 35,
+                          //    color: Colors.white,),
+                          //  title:const Text(
+                            //  "Login",
+                            //  style: TextStyle(
+                             //   color: Colors.white,
+                            //    fontSize: 20),
+                            //  ),
                           
-                               onTap: () {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context,'/drawer/loginpage');
-                              },
-                            ),
-                          ),                         
+                            //   onTap: () {
+                             //   Navigator.pop(context);
+                              //  Navigator.pushNamed(context,'/drawer/loginpage');
+                             // },
+                            //),
+                          //),                         
 
 
 

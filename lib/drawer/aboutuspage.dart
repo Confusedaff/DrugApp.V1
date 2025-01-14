@@ -12,7 +12,7 @@ class _AboutuspageState extends State<Aboutuspage> {
   Widget build(BuildContext context) {
     return  Scaffold(
 
-      body:const Center(child: Text("Account page")),
+      body:const Center(child: Text("About Us")),
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade400,
         title:const Text("            About Us"),
